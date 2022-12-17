@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="/styles/index.css" />
+	<title>Баскетбольный мяч</title>
+	<!-- three.js library -->
+	<script src='/libs/threeJs/index.js'></script>
+	<!-- jsartookit library -->
+	<script src="/libs/jsartoolkit5/artoolkit.min.js"></script>
+	<script src="/libs/jsartoolkit5/artoolkit.api.js"></script>
+	<!-- threex.artoolkit library-->
+	<script src="/libs/threex/threex-artoolkitsource.js"></script>
+	<script src="/libs/threex/threex-artoolkitcontext.js"></script>
+	<script src="/libs/threex/threex-arbasecontrols.js"></script>
+	<script src="/libs/threex/threex-armarkercontrols.js"></script>
+	<!-- ar helper class -->
+	<script src="/js/ARHelper.js"></script>
+</head>
+
+<body>
+
+<script>
+	const arHelper = new ARHelper(THREE, THREEx);
+	arHelper.initialize();
+
+	// build markerControls
+	let markerRootA = new THREE.Group();
+	arHelper.scene.add(markerRootA);
+	let markerControls1 = new THREEx.ArMarkerControls(arHelper.arToolkitContext, markerRootA, {
+		type: 'pattern', patternUrl: "/data/letterA.patt",
+	});
+
+	let markerRootB = new THREE.Group();
+	arHelper.scene.add(markerRootB);
+	let markerControls2 = new THREEx.ArMarkerControls(arHelper.arToolkitContext, markerRootB, {
+		type: 'pattern', patternUrl: "/data/letterB.patt",
+	});
+
+	arHelper.renderer.shadowMap.enabled = true;
+	arHelper.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+	let loader = new THREE.TextureLoader();
+		
+	sceneGroup = new THREE.Group();
+	markerRootA.add(sceneGroup);
+
+	let floorGeometry = new THREE.PlaneGeometry( 20,20 );
+	let floorMaterial = new THREE.ShadowMaterial();
+	floorMaterial.opacity = 0.3;
+	let floorMesh = new THREE.Mesh(floorGeometry, floorMaterial);
+	floorMesh.rotation.x = -Math.PI/2;
+	floorMesh.receiveShadow = true;
+	sceneGroup.add( floorMesh );
+
+	ballMesh = new THREE.Mesh(
+		new THREE.SphereGeometry(0.25, 32, 32),
+		new THREE.MeshLambertMaterial({ 
+			map: loader.load("/assets/images/basketball-gray.png"), 
+			color: 0xff8800
+		})
+	);
+	ballMesh.castShadow = true;
+	arHelper.scene.add(ballMesh);
+		
+	let light = new THREE.PointLight(0xffffff, 1, 100);
+	light.position.set(0,4,0); // default; light shining from top
+	light.castShadow = true;
+	sceneGroup.add(light);
+
+	let lightSphere = new THREE.Mesh(
+		new THREE.SphereGeometry(0.1),
+		new THREE.MeshBasicMaterial({
+			color: 0xffffff,
+			transparent: true,
+			opacity: 0.8
+		})
+	);
+	lightSphere.position.copy(light.position);
+	sceneGroup.add(lightSphere);
+
+	let ambientLight = new THREE.AmbientLight(0x666666);
+	sceneGroup.add(ambientLight);
+
+	// default normal of a plane is 0,0,1. Apply mesh rotation to it.
+	let clipPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(new THREE.Vector3(0,1,0), new THREE.Vector3(0,0,0));
+	arHelper.renderer.clippingPlanes = [clipPlane];
+
+	function cbAfter() {
+		if (markerRootA.visible && markerRootB.visible) {
+			// align clipping plane to scene.
+			arHelper.renderer.clippingPlanes[0].setFromNormalAndCoplanarPoint(
+				new THREE.Vector3(0,1,0).applyQuaternion(sceneGroup.getWorldQuaternion()),
+				sceneGroup.getWorldPosition()
+			);
+			
+			let p = parabolicPath(markerRootA.getWorldPosition(), markerRootB.getWorldPosition(), (totalTime/1) % 4 - 1);
+			ballMesh.position.copy(p);
+			ballMesh.rotation.z += 0.1
+		}
+	}
+
+	function parabolaEvaluate(p0, p1, p2, t) {
+		return (0.5 * (p0 - 2 * p1 + p2)) * t * t + (-0.5 * (3 * p0 - 4 * p1 + p2)) * t + ( p0 );
+	}
+
+	function parabolicPath(pointStart, pointEnd, time) {
+		let pointMiddle = new THREE.Vector3().addVectors(pointStart, pointEnd).multiplyScalar(0.5).add(new THREE.Vector3(0,2,0));
+		return new THREE.Vector3(
+			parabolaEvaluate(pointStart.x, pointMiddle.x, pointEnd.x, time),
+			parabolaEvaluate(pointStart.y, pointMiddle.y, pointEnd.y, time),
+			parabolaEvaluate(pointStart.z, pointMiddle.z, pointEnd.z, time)
+		);	
+	}
+
+	arHelper.animate({after: cbAfter})();
+</script>
+
+</body>
+</html>

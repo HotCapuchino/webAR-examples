@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel="stylesheet" href="/styles/index.css" />
+	<title>Hello, AR Cube!</title>
+	<!-- three.js library -->
+	<script src='/libs/threeJs/index.js'></script>
+	<!-- jsartookit library -->
+	<script src="/libs/jsartoolkit5/artoolkit.min.js"></script>
+	<script src="/libs/jsartoolkit5/artoolkit.api.js"></script>
+	<!-- threex.artoolkit library -->
+	<script src="/libs/threex/threex-artoolkitsource.js"></script>
+	<script src="/libs/threex/threex-artoolkitcontext.js"></script>
+	<script src="/libs/threex/threex-arbasecontrols.js"></script>
+	<script src="/libs/threex/threex-armarkercontrols.js"></script>
+	<script src="/libs/threex/threex-arsmoothedcontrols.js"></script>
+	<!-- ar helper class -->
+	<script src="/js/ARHelper.js"></script>
+</head>
+
+<body>
+
+<script>
+	const arHelper = new ARHelper(THREE, THREEx);
+	arHelper.initialize();
+
+	let markerRoot = new THREE.Group();
+	arHelper.scene.add(markerRoot);
+
+	let markerControls1 = new THREEx.ArMarkerControls(arHelper.arToolkitContext, markerRoot, {
+		type : 'pattern',
+		patternUrl : "/data/hiro.patt",
+	})
+
+	// interpolates from last position to create smoother transitions when moving.
+	// parameter lerp values near 0 are slow, near 1 are fast (instantaneous).
+	let smoothedRoot = new THREE.Group();
+	arHelper.scene.add(smoothedRoot);
+	let smoothedControls = new THREEx.ArSmoothedControls(smoothedRoot, {
+		lerpPosition: 0.8,
+		lerpQuaternion: 0.8,
+		lerpScale: 1,
+		// minVisibleDelay: 1,
+		// minUnvisibleDelay: 1,
+	});
+
+	let geometry = new THREE.CubeGeometry(1,1,1);
+	let material = new THREE.MeshNormalMaterial({
+		transparent : true,
+		opacity: 0.5,
+		side: THREE.DoubleSide
+	}); 
+
+	mesh = new THREE.Mesh(geometry, material);
+	mesh.position.y = 0.5;
+
+	smoothedRoot.add(mesh);
+
+	function cbAfter() {
+		smoothedControls.update(markerRoot);
+	}
+
+	arHelper.animate({after: cbAfter})();
+
+</script>
+
+</body>
+</html>

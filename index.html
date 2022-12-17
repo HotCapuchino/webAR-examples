@@ -1,0 +1,149 @@
+<html>
+  <head>
+    <title>Web AR</title>
+    <link rel="stylesheet" href="styles/index.css" />
+  </head>
+  <body>
+    <aside>
+      <div class="aside-description">
+        Здесь собраны 7 примеров использования технологий AR для web технологий
+      </div>
+
+      <ul onclick="linkClicked(event)">
+        <li class="menu-item">
+          <div class="aside-link" id="single-cube">Один куб</div>
+        </li>
+        <li class="menu-item">
+          <div class="aside-link" id="several-cubes">Много кубов</div>
+        </li>
+        <li class="menu-item">
+          <div class="aside-link" id="globe">Вращающийся глобус (жесть!)</div>
+        </li>
+        <li class="menu-item">
+          <div class="aside-link" id="portal">Портал в Челябинск</div>
+        </li>
+        <li class="menu-item">
+          <div class="aside-link" id="magic-cube">
+            Магический куб, зачарованный на удачу и деньги
+          </div>
+        </li>
+        <li class="menu-item">
+          <div class="aside-link" id="NBA">NBA</div>
+        </li>
+        <li class="menu-item">
+          <div class="aside-link" id="basketball">Школа баскетбола</div>
+        </li>
+      </ul>
+    </aside>
+
+    <main>
+      <h1 id="example-title"></h1>
+      <video id="example-video" autoplay loop></video>
+      <div id="example-description"></div>
+      <div id="example-link"></div>
+    </main>
+  </body>
+
+  <script>
+    const PAGES = [
+      "single-cube",
+      "several-cubes",
+      "globe",
+      "portal",
+      "magic-cube",
+      "NBA",
+      "basketball",
+    ];
+    // TODO: настроить стили
+    const CONTENT = {
+      "single-cube": {
+        title: "Один куб",
+        description:
+          "<div>Похожий куб упал мне на голову в детском саду. Прямо как яблоко на голову Ньютона</div>",
+        gifURL: "assets/videos/test_video.mp4",
+        pageURL: '<a href="pages/single_cube.html">Ссылка на пример</a>',
+      },
+      "several-cubes": {
+        title: "Много кубов",
+        description:
+          "<div>Что может быть лучше одного куба? Правильно! Много кубов!</div>",
+        gifURL: "assets/videos/test_video.mp4",
+        pageURL: '<a href="pages/many_cubes.html">Ссылка на пример</a>',
+      },
+      globe: {
+        title: "Вращающийся глобус (жесть!)",
+        description: "<div>Шароебы оказались правы...</div>",
+        gifURL: "assets/videos/test_video.mp4",
+        pageURL: '<a href="pages/globe.html">Ссылка на пример</a>',
+      },
+      portal: {
+        title: "Портал в Челябинск",
+        description: "<div>Шанс прикоснуться к прекрасному</div>",
+        gifURL: "assets/videos/test_video.mp4",
+        pageURL: '<a href="pages/portalAR.html">Ссылка на пример</a>',
+      },
+      "magic-cube": {
+        title: "Магический куб, зачарованный на удачу и деньги",
+        description: "<div>Мне нравится</div>",
+        gifURL: "assets/videos/test_video.mp4",
+        pageURL: '<a href="pages/magic_cube.html">Ссылка на пример</a>',
+      },
+      NBA: {
+        title: "NBA",
+        description: "<div>Нет блин FIFA</div>",
+        gifURL: "assets/videos/test_video.mp4",
+        pageURL: '<a href="pages/NBA.html">Ссылка на пример</a>',
+      },
+      basketball: {
+        title: "Школа баскетбола",
+        description:
+          "<div>Делай это упражнение перед сном и боль в пояснице пройдет</div>",
+        gifURL: "assets/videos/test_video.mp4",
+        pageURL: '<a href="pages/parabola.html">Ссылка на пример</a>',
+      },
+    };
+    let currentPage = null;
+
+    function loadContent() {
+      const menuItem = document.getElementById(currentPage);
+      menuItem.closest(".menu-item").classList.add("menu-item_active");
+
+      const targetContent = CONTENT[currentPage];
+
+      const title = document.getElementById("example-title");
+      title.textContent = targetContent.title;
+
+      const video = document.getElementById("example-video");
+      video.setAttribute("src", targetContent.gifURL);
+
+      const description = document.getElementById("example-description");
+      description.innerHTML = targetContent.description;
+
+      const link = document.getElementById("example-link");
+      link.innerHTML = targetContent.pageURL;
+    }
+
+    function linkClicked(event) {
+      if (event.target.hasAttribute("id")) {
+        id = event.target.id;
+
+        if (PAGES.find((page) => page === id)) {
+          if (currentPage) {
+            const menuItem = document.getElementById(currentPage);
+            menuItem.closest(".menu-item").classList.remove("menu-item_active");
+          }
+
+          currentPage = id;
+          loadContent();
+        }
+      }
+    }
+
+    window.onload = () => {
+      if (!currentPage) {
+        currentPage = PAGES[0];
+        loadContent();
+      }
+    };
+  </script>
+</html>
