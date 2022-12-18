@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<link rel="stylesheet" href="./styles/index.css" />
+	<link rel="stylesheet" href="../styles/index.css" />
 	<title>Портал</title>
 	<!-- three.js library -->
-	<script src='./libs/threeJs/index.js'></script>
+	<script src='../libs/threeJs/index.js'></script>
 	<!-- jsartookit library -->
-	<script src="./libs/jsartoolkit5/artoolkit.min.js"></script>
-	<script src="./libs/jsartoolkit5/artoolkit.api.js"></script>
+	<script src="../libs/jsartoolkit5/artoolkit.min.js"></script>
+	<script src="../libs/jsartoolkit5/artoolkit.api.js"></script>
 	<!-- threex.artoolkit library-->
-	<script src="./libs/threex/threex-artoolkitsource.js"></script>
-	<script src="./libs/threex/threex-artoolkitcontext.js"></script>
-	<script src="./libs/threex/threex-arbasecontrols.js"></script>
-	<script src="./libs/threex/threex-armarkercontrols.js"></script>
-	<script src="./libs/threex/threex-arsmoothedcontrols.js"></script>
+	<script src="../libs/threex/threex-artoolkitsource.js"></script>
+	<script src="../libs/threex/threex-artoolkitcontext.js"></script>
+	<script src="../libs/threex/threex-arbasecontrols.js"></script>
+	<script src="../libs/threex/threex-armarkercontrols.js"></script>
+	<script src="../libs/threex/threex-arsmoothedcontrols.js"></script>
 	<!-- ar helper class -->
-	<script src="./js/ARHelper.js"></script>
+	<script src="../js/ARHelper.js"></script>
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 
 	let markerControls1 = new THREEx.ArMarkerControls(arHelperForPortal.arToolkitContext, kanjiMarker, {
 		type : 'pattern',
-		patternUrl : "./data/kanji.patt",
+		patternUrl : "../data/kanji.patt",
 	})
 
 	// interpolates from last position to create smoother transitions when moving.
@@ -48,7 +48,7 @@
 	let loader = new THREE.TextureLoader();
 
 	let defaultMaterial = new THREE.MeshBasicMaterial({
-		map: loader.load("./assets/images/sphere-colored.png"), 
+		map: loader.load("../assets/images/sphere-colored.png"), 
 		color: 0x444444,
 		side: THREE.DoubleSide,
 		transparent: true,
@@ -81,12 +81,12 @@
 	smoothedRoot.add(portalBorderMesh);
 
 	let skyMaterialArray = [
-		new THREE.MeshBasicMaterial({ map: loader.load("./assets/images/mountain/posx.jpg"), side: THREE.BackSide }),
-		new THREE.MeshBasicMaterial({ map: loader.load("./assets/images/mountain/negx.jpg"), side: THREE.BackSide }),
-		new THREE.MeshBasicMaterial({ map: loader.load("./assets/images/mountain/posy.jpg"), side: THREE.BackSide }),
-		new THREE.MeshBasicMaterial({ map: loader.load("./assets/images/mountain/negy.jpg"), side: THREE.BackSide }),
-		new THREE.MeshBasicMaterial({ map: loader.load("./assets/images/mountain/posz.jpg"), side: THREE.BackSide }),
-		new THREE.MeshBasicMaterial({ map: loader.load("./assets/images/mountain/negz.jpg"), side: THREE.BackSide }),
+		new THREE.MeshBasicMaterial({ map: loader.load("../assets/images/mountain/posx.jpg"), side: THREE.BackSide }),
+		new THREE.MeshBasicMaterial({ map: loader.load("../assets/images/mountain/negx.jpg"), side: THREE.BackSide }),
+		new THREE.MeshBasicMaterial({ map: loader.load("../assets/images/mountain/posy.jpg"), side: THREE.BackSide }),
+		new THREE.MeshBasicMaterial({ map: loader.load("../assets/images/mountain/negy.jpg"), side: THREE.BackSide }),
+		new THREE.MeshBasicMaterial({ map: loader.load("../assets/images/mountain/posz.jpg"), side: THREE.BackSide }),
+		new THREE.MeshBasicMaterial({ map: loader.load("../assets/images/mountain/negz.jpg"), side: THREE.BackSide }),
 	];
 	let skyMesh = new THREE.Mesh(new THREE.CubeGeometry(30,30,30), skyMaterialArray);
 	skyMesh.layers.set(2);

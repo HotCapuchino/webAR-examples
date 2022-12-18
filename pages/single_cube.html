@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<link rel="stylesheet" href="./styles/index.css" />
+	<link rel="stylesheet" href="../styles/index.css" />
 	<title>Hello, AR Cube!</title>
 	<!-- three.js library -->
-	<script src='./libs/threeJs/index.js'></script>
+	<script src='../libs/threeJs/index.js'></script>
 	<!-- jsartookit library -->
-	<script src="./libs/jsartoolkit5/artoolkit.min.js"></script>
-	<script src="./libs/jsartoolkit5/artoolkit.api.js"></script>
+	<script src="../libs/jsartoolkit5/artoolkit.min.js"></script>
+	<script src="../libs/jsartoolkit5/artoolkit.api.js"></script>
 	<!-- threex.artoolkit library -->
-	<script src="./libs/threex/threex-artoolkitsource.js"></script>
-	<script src="./libs/threex/threex-artoolkitcontext.js"></script>
-	<script src="./libs/threex/threex-arbasecontrols.js"></script>
-	<script src="./libs/threex/threex-armarkercontrols.js"></script>
-	<script src="./libs/threex/threex-arsmoothedcontrols.js"></script>
+	<script src="../libs/threex/threex-artoolkitsource.js"></script>
+	<script src="../libs/threex/threex-artoolkitcontext.js"></script>
+	<script src="../libs/threex/threex-arbasecontrols.js"></script>
+	<script src="../libs/threex/threex-armarkercontrols.js"></script>
+	<script src="../libs/threex/threex-arsmoothedcontrols.js"></script>
 	<!-- ar helper class -->
-	<script src="./js/ARHelper.js"></script>
+	<script src="../js/ARHelper.js"></script>
 </head>
 
 <body>
@@ -29,7 +29,7 @@
 
 	let markerControls1 = new THREEx.ArMarkerControls(arHelper.arToolkitContext, markerRoot, {
 		type : 'pattern',
-		patternUrl : "./data/hiro.patt",
+		patternUrl : "../data/hiro.patt",
 	})
 
 	// interpolates from last position to create smoother transitions when moving.
