@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<link rel="stylesheet" href="/styles/index.css" />
+	<link rel="stylesheet" href="./styles/index.css" />
 	<title>Hello, world!</title>
 	<!-- three.js library -->
-	<script src='/libs/threeJs/index.js'></script>
+	<script src='./libs/threeJs/index.js'></script>
 	<!-- jsartookit library -->
-	<script src="/libs/jsartoolkit5/artoolkit.min.js"></script>
-	<script src="/libs/jsartoolkit5/artoolkit.api.js"></script>
+	<script src="./libs/jsartoolkit5/artoolkit.min.js"></script>
+	<script src="./libs/jsartoolkit5/artoolkit.api.js"></script>
 	<!-- include threex.artoolkit library -->
-	<script src="/libs/threex/threex-artoolkitsource.js"></script>
-	<script src="/libs/threex/threex-artoolkitcontext.js"></script>
-	<script src="/libs/threex/threex-arbasecontrols.js"></script>
-	<script src="/libs/threex/threex-armarkercontrols.js"></script>
+	<script src="./libs/threex/threex-artoolkitsource.js"></script>
+	<script src="./libs/threex/threex-artoolkitcontext.js"></script>
+	<script src="./libs/threex/threex-arbasecontrols.js"></script>
+	<script src="./libs/threex/threex-armarkercontrols.js"></script>
 	<!-- ar helper class -->
-	<script src="/js/ARHelper.js"></script>
+	<script src="./js/ARHelper.js"></script>
 </head>
 
 <body>
@@ -26,7 +26,7 @@
 	let markerRoot = new THREE.Group();
 	arHelper.scene.add(markerRoot);
 	let markerControls1 = new THREEx.ArMarkerControls(arHelper.arToolkitContext, markerRoot, {
-		type: 'pattern', patternUrl: "/data/kanji.patt",
+		type: 'pattern', patternUrl: "./data/kanji.patt",
 	})
 
 	arHelper.renderer.shadowMap.enabled = true;
@@ -47,7 +47,7 @@
 
 
 	ballMeshArray = [];
-	let ballTexture = loader.load("/assets/images/basketball-gray.png");
+	let ballTexture = loader.load("./assets/images/basketball-gray.png");
 	let ballColors = [0xff0000, 0x009900, 0xff8800, 0x0000ff];
 	let p = 1;
 	let ballPositions = [new THREE.Vector3(p,1,p), new THREE.Vector3(-p,1,p), 

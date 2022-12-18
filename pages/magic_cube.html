@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<link rel="stylesheet" href="/styles/index.css" />
+	<link rel="stylesheet" href="./styles/index.css" />
 	<title>Куб</title>
 	<!-- three.js library -->
-	<script src='/libs/threeJs/index.js'></script>
+	<script src='./libs/threeJs/index.js'></script>
 	<!-- jsartookit library -->
-	<script src="/libs/jsartoolkit5/artoolkit.min.js"></script>
-	<script src="/libs/jsartoolkit5/artoolkit.api.js"></script>
+	<script src="./libs/jsartoolkit5/artoolkit.min.js"></script>
+	<script src="./libs/jsartoolkit5/artoolkit.api.js"></script>
 	<!-- threex.artoolkit library -->
-	<script src="/libs/threex/threex-artoolkitsource.js"></script>
-	<script src="/libs/threex/threex-artoolkitcontext.js"></script>
-	<script src="/libs/threex/threex-arbasecontrols.js"></script>
-	<script src="/libs/threex/threex-armarkercontrols.js"></script>
+	<script src="./libs/threex/threex-artoolkitsource.js"></script>
+	<script src="./libs/threex/threex-artoolkitcontext.js"></script>
+	<script src="./libs/threex/threex-arbasecontrols.js"></script>
+	<script src="./libs/threex/threex-armarkercontrols.js"></script>
 	<!-- ar helper class -->
-	<script src="/js/ARHelper.js"></script>
+	<script src="./js/ARHelper.js"></script>
 </head>
 
 <body>
@@ -35,7 +35,7 @@
 		markerRootArray.push(markerRoot);
 		arHelper.scene.add(markerRoot);
 		let markerControls = new THREEx.ArMarkerControls(arHelper.arToolkitContext, markerRoot, {
-			type : 'pattern', patternUrl : "/data/" + patternArray[i] + ".patt",
+			type : 'pattern', patternUrl : "./data/" + patternArray[i] + ".patt",
 		});
 
 		let markerGroup = new THREE.Group();
@@ -52,7 +52,7 @@
 
 	let loader = new THREE.TextureLoader();
 
-	let tileTexture = loader.load("/assets/images/tiles.jpg");
+	let tileTexture = loader.load("./assets/images/tiles.jpg");
 
 	// reversed cube
 	sceneGroup.add( 
