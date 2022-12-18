@@ -50,7 +50,7 @@ class ARHelper {
         });
 
         this.arToolkitContext = new this.threeXLibInstance.ArToolkitContext({
-            cameraParametersUrl: '/data/camera_para.dat',
+            cameraParametersUrl: '../data/camera_para.dat',
             detectionMode: 'mono'
         });
 
